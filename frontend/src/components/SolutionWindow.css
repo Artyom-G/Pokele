@@ -1,0 +1,60 @@
+.pokemon-solution-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    padding: 30px;
+    background-color: #181818ab;
+    border: 4px solid #5e5e5eab;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+.pokemon-solution-id {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.pokemon-solution-types {
+    text-align: right;
+    font-size: 22px;
+}
+
+.pokemon-solution-type-item {
+    display: inline-block;
+    font-size: 18px;
+}
+
+.pokemon-solution-picture-border {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 240px;
+    height: 240px;
+    border-radius: 1000px;
+}
+
+.pokemon-solution-picture {
+    width: 200px;
+    height: 200px;
+}
+
+.pokemon-solution-gen {
+    font-size: 20px;
+    color: #777;
+}
+
+.pokemon-solution-name {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.pokemon-solution-abilities {
+    text-align: right;
+}
+
+.pokemon-solution-ability-item {
+    display: inline-block;
+    font-size: 16px;
+    color: #555;
+}

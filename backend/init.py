@@ -1,15 +1,31 @@
 from config import app, db
 from models import Pokemon
 from flask import jsonify
-from flask_restful import Resource, Api
 import requests
 import json
+import string
+from PIL import Image
 
-def beautify_gen(gen):
-    return "Gen " + gen[11:].upper()
+def get_dominant_colors(pil_img, palette_size=16, num_colors=2):
+    # Resize image to speed up processing
+    img = pil_img.copy()
+    img.thumbnail((100, 100))
 
-# Should be Delete and Post but its expecting a Get for some reason 
-@app.route('/api/v1/pokemon/create', methods=["GET", "POST", "DELETE", "PATCH"])
+    # Reduce colors (uses k-means internally)
+    paletted = img.convert('P', palette=Image.ADAPTIVE, colors=palette_size)
+
+    # Find the color that occurs most often
+    palette = paletted.getpalette()
+    color_counts = sorted(paletted.getcolors(), reverse=True)
+
+    dominant_colors = []
+    for i in range(num_colors):
+      palette_index = color_counts[i][1]
+      hex_color = '#%02x%02x%02x' % tuple(palette[palette_index*3:palette_index*3+3])
+      dominant_colors.append(hex_color)
+
+    return dominant_colors
+
 def create_database():
     # Clear the existing Pokémon data
     Pokemon.query.delete()
@@ -17,6 +33,7 @@ def create_database():
 
     # Static number of Pokémon (fetching gives megas and special forms)
     numPokemon = Pokemon.numPokemon
+    #numPokemon = 100
 
     # Fetching Pokémon data
     r = requests.get(f"https://pokeapi.co/api/v2/pokemon/?limit={numPokemon}")
@@ -32,15 +49,20 @@ def create_database():
             pokemonReq = requests.get(pokemonUrl["url"]).json()
             pokemonSpeciesReq = requests.get(pokemonReq["species"]["url"]).json()
 
+            img = Image.open(requests.get(pokemonReq["sprites"]["other"]["official-artwork"]["front_default"], stream=True).raw)
+            blank, primary_color, secondary_color = get_dominant_colors(img, 16, 3)
+
             # Save to the database
             new_pokemon = Pokemon(
-                id=pokemonReq["id"],
-                name=pokemonReq["name"],
+                id=str(pokemonReq["id"]).zfill(4),
+                name=string.capwords(pokemonReq["name"].lower()),
                 abilities=json.dumps(pokemonReq["abilities"]),
                 types=json.dumps(pokemonReq["types"]),
                 picture=pokemonReq["sprites"]["other"]["official-artwork"]["front_default"],
                 gen=pokemonSpeciesReq["generation"]["name"],
                 color=pokemonSpeciesReq["color"]["name"],
+                primary_color=primary_color,
+                secondary_color=secondary_color
             )
             db.session.add(new_pokemon)
             if i % 50 == 0: print(f"Added {new_pokemon.name} #{new_pokemon.id}")
@@ -63,5 +85,3 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
         create_database()
-
-    app.run(debug=True)

@@ -54,6 +54,26 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  justify-content: right;
+}
+
+.gray-text {
+  color: #777;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

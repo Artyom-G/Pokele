@@ -4,6 +4,7 @@ from models import Pokemon
 import json
 import random
 from datetime import datetime
+import string
 
 #@app.route("/api/v1/all", methods=["GET"])
 def get_all_pokemon():
@@ -14,11 +15,11 @@ def get_all_pokemon():
     pokemon_list = [pokemon.to_json() for pokemon in all_pokemon]
     return jsonify(pokemon_list), 200
 
-#@app.route("/api/v1/<name>", methods=["GET"])
+@app.route("/api/v1/<name>", methods=["GET"])
 def get_pokemon(name):
     pokemon = None
-    if(not name.isnumeric()): pokemon = Pokemon.query.get(name)
-    else: pokemon = Pokemon.query.filter_by(id=name).first()
+    if(not name.isnumeric()): pokemon = Pokemon.query.get(string.capwords(name.lower()))
+    else: pokemon = Pokemon.query.filter_by(id=name.zfill(4)).first()
     if not pokemon:
         return jsonify({"message": "Pokemon not found"}), 404
     return jsonify({"pokemon": pokemon.to_json()}), 200
@@ -30,7 +31,7 @@ def get_today_pokemon():
     random.seed(seed)
     id = random.randint(0, modulo)+1
     print(f"Generating with seed {seed}, returns #{id}")
-    pokemon = Pokemon.query.filter_by(id=id).first()
+    pokemon = Pokemon.query.filter_by(id=str(id).zfill(4)).first()
     if not pokemon:
         return jsonify({"message": "Pokemon not found"}), 404
 
@@ -47,12 +48,26 @@ def validate_pokemon(name):
     print("Checking ", pokemon_today["name"], " and ", pokemon_guess["name"])
     
     pokemon = dict()
-    if(pokemon_today["id"] == pokemon_guess["id"]): pokemon = pokemon_today
-    if(pokemon_today["abilities"] == pokemon_guess["abilities"]): pokemon["abilities"] = pokemon_today["abilities"]
-    if(pokemon_today["color"] == pokemon_guess["color"]): pokemon["color"] = pokemon_today["color"]
+    if(pokemon_today["name"] == pokemon_guess["name"]): pokemon = pokemon_today
+    id = ""
+    for i in range(len(pokemon_today["id"])):
+        if pokemon_today["id"][i] == pokemon_guess["id"][i]: id += pokemon_today["id"][i]
+        else: id += "?"
+    pokemon["id"] = id
+    abilities = []
+    for ability in pokemon_guess["abilities"]:
+        if ability in pokemon_today["abilities"]: abilities.append(ability)
+    pokemon["abilities"] = abilities
+    if(pokemon_today["color"] == pokemon_guess["color"]): 
+        pokemon["color"] = pokemon_today["color"]
+        pokemon["primary_color"] = pokemon_today["primary_color"]
+        pokemon["secondary_color"] = pokemon_today["secondary_color"]
     if(pokemon_today["gen"] == pokemon_guess["gen"]): pokemon["gen"] = pokemon_today["gen"]
     if(pokemon_today["picture"] == pokemon_guess["picture"]): pokemon["picture"] = pokemon_today["picture"]
-    if(pokemon_today["types"] == pokemon_guess["types"]): pokemon["types"] = pokemon_today["types"]
+    types = []
+    for type in pokemon_guess["types"]:
+        if type in pokemon_today["types"]: types.append(type)
+    pokemon["types"] = types
 
     return jsonify({"response": pokemon}), 200
 
