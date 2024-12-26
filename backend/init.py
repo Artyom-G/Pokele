@@ -5,6 +5,9 @@ from flask_restful import Resource, Api
 import requests
 import json
 
+def beautify_gen(gen):
+    return "Gen " + gen[11:].upper()
+
 # Should be Delete and Post but its expecting a Get for some reason 
 @app.route('/api/v1/pokemon/create', methods=["GET", "POST", "DELETE", "PATCH"])
 def create_database():

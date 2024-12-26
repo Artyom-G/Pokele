@@ -5,11 +5,11 @@ class Pokemon(db.Model):
     __tablename__ = 'pokemon'
     numPokemon = 1025
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    id = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(100), primary_key=True)
     abilities = db.Column(db.Text, nullable=False)
     types = db.Column(db.Text, nullable=False)
-    picture = db.Column(db.String(255), nullable=True)
+    picture = db.Column(db.String(255), nullable=False)
     gen = db.Column(db.String(50), nullable=False)
     color = db.Column(db.String(50), nullable=False)
 
