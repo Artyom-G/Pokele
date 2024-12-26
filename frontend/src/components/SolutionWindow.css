@@ -1,9 +1,10 @@
 .pokemon-solution-container {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: Arial, sans-serif;
-    padding: 30px;
+    padding: 10px 30px;
     background-color: #181818ab;
     border: 4px solid #5e5e5eab;
     border-radius: 10px;
@@ -11,49 +12,73 @@
 }
 
 .pokemon-solution-id {
-    font-size: 36px;
+    width: 150px;
+    justify-content: left;
+    text-align: left;
+    font-size: 18px;
     font-weight: bold;
 }
 
-.pokemon-solution-types {
-    text-align: right;
-    font-size: 22px;
-}
-
-.pokemon-solution-type-item {
-    display: inline-block;
-    font-size: 18px;
+.pokemon-solution-picture-border-border {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 10000px;
 }
 
 .pokemon-solution-picture-border {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 240px;
-    height: 240px;
-    border-radius: 1000px;
+    width: 60px;
+    height: 60px;
+    border-radius: 10000px;
 }
 
 .pokemon-solution-picture {
-    width: 200px;
-    height: 200px;
+    width: 50px;
+    height: 50px;
 }
 
 .pokemon-solution-gen {
-    font-size: 20px;
+    width: 150px;
+    justify-content: right;
+    text-align: right;
+    font-size: 18px;
     color: #777;
 }
 
 .pokemon-solution-name {
-    font-size: 28px;
+    font-size: 18px;
     font-weight: bold;
+}
+
+.pokemon-solution-row-2 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
 }
 
 .pokemon-solution-abilities {
     text-align: right;
 }
 
-.pokemon-solution-ability-item {
+.pokemon-solution-types {
+    justify-content: left;
+    text-align: left;
+}
+
+.pokemon-solution-types, .pokemon-solution-abilities {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+.pokemon-solution-ability-item, .pokemon-solution-type-item {
     display: inline-block;
     font-size: 16px;
     color: #555;

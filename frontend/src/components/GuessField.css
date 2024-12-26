@@ -1,6 +1,6 @@
 /* Form styling */
 .guess-form {
-    width: 500px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,7 +28,9 @@
 }
 
 
+/* Styling for each guess */
 .guess-items{
+    width: 100%;
     padding: 30px;
     background-color: #00000088;
     border: 4px solid #5e5e5eab;
@@ -36,7 +38,6 @@
     margin-bottom: 40px;
 }
 
-/* Styling for each guess */
 .guess-item {
     display: flex;
     justify-content: space-between;

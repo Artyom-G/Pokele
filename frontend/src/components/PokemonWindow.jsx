@@ -8,14 +8,7 @@ const PokemonWindow = ({pokemon}) => {
             <div className="pokemon-container">
                 <div className="row">
                     <span className="pokemon-id gray-text">#{pokemon.id}</span>
-                    <div className="pokemon-types">
-                        <span>Types: </span>
-                        <ul className="column">
-                            {pokemon.types.map((type, index) => (
-                                <span key={index} className="type-item">{type}</span>
-                            ))}
-                        </ul>
-                    </div>
+                    <span className="pokemon-gen">Gen {pokemon.gen}</span>
                 </div>
 
                 <div className="pokemon-picture-border-border" style={{ border: `solid ${pokemon.primary_color} 10px` }}>
@@ -29,16 +22,19 @@ const PokemonWindow = ({pokemon}) => {
                 </div>
 
                 <span className="pokemon-name">{pokemon.name}</span>
-                <div className="row">
-                    <span className="pokemon-gen">Gen {pokemon.gen}</span>
+                <div className="pokemon-row-2 row">
+                    <div className="pokemon-types">
+                        <span>Types: </span>
+                        {pokemon.types.map((type, index) => (
+                            <span key={index} className="pokemon-type-item">{type}</span>
+                        ))}
+                    </div>
 
                     <div className="pokemon-abilities">
                         <span>Abilities: </span>
-                        <ul className="column">
-                            {pokemon.abilities.map((ability, index) => (
-                                <span key={index} className="ability-item">{ability}</span>
-                            ))}
-                        </ul>
+                        {pokemon.abilities.map((ability, index) => (
+                            <span key={index} className="pokemon-ability-item">{ability}</span>
+                        ))}
                     </div>
                 </div>
             </div>

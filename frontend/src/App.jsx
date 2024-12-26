@@ -20,8 +20,21 @@ function App() {
 
     const makeGuess = (guess, validatedGuess) => {
         // Combine known information
+        var id = ""
+        for (let i = 0; i < pokemonSolution.id.length; i++) {
+            if(pokemonSolution.id[i] !== "?"){
+                id += pokemonSolution.id[i]
+            }
+            else if(validatedGuess.id){
+                id += validatedGuess.id[i]
+            }
+            else{
+                id += "?"
+            }
+        }
+
         setPokemonSolution((prevPokemon) => ({
-            id: validatedGuess.id || prevPokemon.id,
+            id: id || prevPokemon.id,
             name: validatedGuess.name || prevPokemon.name,
             abilities: validatedGuess.abilities
                 ? [...new Set([...prevPokemon.abilities, ...validatedGuess.abilities])]
@@ -40,9 +53,13 @@ function App() {
 
     return (
         <>
-            <SolutionWindow pokemon={pokemonSolution}/>
-            <PokemonWindow pokemon={pokemonGuess}/>
-            <GuessField makeGuess={makeGuess}/>
+            <div className='body'>
+                <SolutionWindow pokemon={pokemonSolution}/>
+                <PokemonWindow pokemon={pokemonGuess}/>
+                <GuessField makeGuess={makeGuess}/>
+            </div>
+            <div className='background'/>
+            <span className='logo'>Pokéle</span>
         </>
     )
 }

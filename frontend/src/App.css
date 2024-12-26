@@ -18,6 +18,37 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.background {
+  background: url("https://pm1.aminoapps.com/6617/79484ce2f6c171bc2e84f8c6cfa41a51a0cb0ead_hq.jpg") no-repeat center center fixed;
+  filter: brightness(0.3) blur(4px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  border: none;
+  z-index: -1; 
+  background-size: cover; 
+}
+
+.logo {
+  position: fixed;
+  top: 14px;
+  left: 40px;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  border: none;
+  z-index: 1; 
+  text-align: left;
+  font-size: 24px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

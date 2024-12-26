@@ -9,26 +9,30 @@ const PokemonWindow = ({pokemon}) => {
                 <div className="row">
                     <span className="pokemon-solution-id gray-text">#{pokemon.id}</span>
                     <span className="pokemon-solution-name">{pokemon.name}</span>
-                    <div className="pokemon-solution-types">
-                        <span>Types: </span>
-                        <ul className="column">
-                            {pokemon.types.map((type, index) => (
-                                <span key={index} className="pokemon-solution-type-item">{type}</span>
-                            ))}
-                        </ul>
-                    </div>
+                    <span className="pokemon-solution-gen">Gen {pokemon.gen}</span>
                 </div>
 
-                <div className="row">
-                    <span className="pokemon-solution-gen">Gen {pokemon.gen}</span>
-
+                <div className="pokemon-solution-row-2">
+                    <div className="pokemon-solution-types">
+                        <span>Types: </span>
+                        {pokemon.types.map((type, index) => (
+                            <span key={index} className="pokemon-solution-type-item">{type}</span>
+                        ))}
+                    </div>
+                    <div className="pokemon-solution-picture-border-border" style={{ border: `solid ${pokemon.primary_color} 4px` }}>
+                        <div className="pokemon-solution-picture-border" style={{ border: `solid ${pokemon.secondary_color} 2px` }}>
+                            <img
+                                className="pokemon-solution-picture"
+                                src={pokemon.picture}
+                                alt={pokemon.name}
+                            />
+                        </div>
+                    </div>
                     <div className="pokemon-solution-abilities">
                         <span>Abilities: </span>
-                        <ul className="column">
-                            {pokemon.abilities.map((ability, index) => (
-                                <span key={index} className="pokemon-solution-ability-item">{ability}</span>
-                            ))}
-                        </ul>
+                        {pokemon.abilities.map((ability, index) => (
+                            <span key={index} className="pokemon-solution-ability-item">{ability}</span>
+                        ))}
                     </div>
                 </div>
             </div>

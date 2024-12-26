@@ -21,7 +21,7 @@ const GuessField = ({ makeGuess }) => {
             if (response.status !== 201 && response.status !== 200) {
                 const data = await response.json()
                 console.log(`Pokemon ${guess} does not exist!\n${data.message}`)
-                //alert(`Pokemon ${guess} does not exist!`)
+                alert(`Pokemon ${guess} does not exist!`)
             }
             else {
                 const data = await response.json()
