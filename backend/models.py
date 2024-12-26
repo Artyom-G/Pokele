@@ -1,7 +1,9 @@
 from config import db
+import json
 
 class Pokemon(db.Model):
     __tablename__ = 'pokemon'
+    numPokemon = 1025
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -24,8 +26,14 @@ class Pokemon(db.Model):
         return f"<Pokemon {self.id} - {self.name}>"
 
     def to_json(self):
+        pokemon = self
         return {
-            "id": self.id,
-            "name": self.name,
+            "id": pokemon.id,
+            "name": pokemon.name,
+            "abilities": json.loads(pokemon.abilities),
+            "types": json.loads(pokemon.types),
+            "picture": pokemon.picture,
+            "gen": pokemon.gen,
+            "color": pokemon.color
         }
 

@@ -13,7 +13,7 @@ def create_database():
     db.session.commit()
 
     # Static number of Pokémon (fetching gives megas and special forms)
-    numPokemon = 1025
+    numPokemon = Pokemon.numPokemon
 
     # Fetching Pokémon data
     r = requests.get(f"https://pokeapi.co/api/v2/pokemon/?limit={numPokemon}")
@@ -21,8 +21,9 @@ def create_database():
         return jsonify({"error": f"Failed to fetch Pokémon list: {r.status_code}"}), 500
 
     pokemonUrls = r.json()["results"]
-
+    i = 1
     for pokemonUrl in pokemonUrls:
+        if i % 50 == 0: print(f"Adding Pokemon #{i}")
         try:
             # Fetch Pokémon details
             pokemonReq = requests.get(pokemonUrl["url"]).json()
@@ -39,12 +40,18 @@ def create_database():
                 color=pokemonSpeciesReq["color"]["name"],
             )
             db.session.add(new_pokemon)
+            if i % 50 == 0: print(f"Added {new_pokemon.name} #{new_pokemon.id}")
             
         except Exception as e:
             print(f"Error processing {pokemonUrl['name']}: {e}")
-            continue
 
-    db.session.commit()
+        i+=1
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        print(str(e))
+        return (jsonify({"message": str(e)}), 400)
     print("Created Database!")
     return jsonify({"message": "Successfully created database"}), 200
 
@@ -52,5 +59,6 @@ if __name__ == "__main__":
     print("Init Started")
     with app.app_context():
         db.create_all()
+        create_database()
 
     app.run(debug=True)
