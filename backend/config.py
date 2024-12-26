@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Change the url?
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///pokemondatabase.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)

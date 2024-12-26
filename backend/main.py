@@ -2,7 +2,7 @@ from flask import request, jsonify
 from config import app, db
 from models import Pokemon
 
-@app.route("/pokemon", methods=["GET"])
+@app.route("/api/v1/pokemon/", methods=["GET"])
 def get_pokemon():
     pokemon = Pokemon.query.all()
     json_contacts = list(map(lambda x: x.to_json(), pokemon))
