@@ -6,6 +6,10 @@ import random
 from datetime import datetime
 import string
 
+@app.route("/api/v1/ping", methods=["GET"])
+def get_ping():
+    return jsonify({"message": "pong"}), 200
+
 #@app.route("/api/v1/all", methods=["GET"])
 def get_all_pokemon():
     all_pokemon = Pokemon.query.all()
