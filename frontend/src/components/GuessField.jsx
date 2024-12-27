@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./GuessField.css";
 
+const baseUrl = import.meta.env.VITE_API_BASE_LINK
+
 const GuessField = ({ makeGuess }) => {
 
     const [guess, setGuess] = useState("")
@@ -10,7 +12,7 @@ const GuessField = ({ makeGuess }) => {
         if (guess && !(guess in guesses)) {
             e.preventDefault()
 
-            const url = `http://127.0.0.1:5000/api/v1/guess/${guess}`
+            const url = `${baseUrl}/api/v1/guess/${guess}`
             const options = {
                 method: "GET",
                 headers: {
@@ -27,7 +29,7 @@ const GuessField = ({ makeGuess }) => {
                 const data = await response.json()
                 console.log(data.response)
                 
-                const guessUrl = `http://127.0.0.1:5000/api/v1/${guess}`
+                const guessUrl = `${baseUrl}/api/v1/${guess}`
                 const guessOptions = {
                     method: "GET",
                     headers: {
@@ -62,7 +64,7 @@ const GuessField = ({ makeGuess }) => {
             </form>
 
             <div className="guess-items">
-                {guesses.reverse().map((guess, key) => {
+                {guesses.map((guess, key) => {
                     return(
                         <div className="guess-item" key={key}>
                             <div className="guess-ids">
